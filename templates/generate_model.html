@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model and Shirts</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>3D Model and Shirts</h1>
+    
+    <div>
+        <h2>Generated Model With NiceBuddy</h2>
+        <img src="/static/generated_model.jpg" alt="Generated Model">
+    </div>
+
+    <div>
+        <h2>Select a Shirt</h2>
+        {% for shirt in shirts %}
+        <img src="/static/shirts/shirt.jpg" alt="Shirt" onclick="applyShirt('{{ shirt }}')">
+        <img src="/static/shirts/shirt1.jpg" alt="Shirt">
+        <img src="/static/shirts/shirt2.jpg" alt="Shirt">
+        <img src="/static/shirts/shirt3.jpg" alt="Shirt">
+        {% endfor %}
+    </div>
+
+    <script>
+        function applyShirt(shirt) {
+            fetch('/apply_shirt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ shirt: shirt })
+            })
+                .then(response => response.json())
+                .then(data => alert(data.message || data.error));
+        }
+    </script>
+</body>
+</html>

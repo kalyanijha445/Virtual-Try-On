@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Scanning NiceBuddy</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Virtual Try-On</h1>
+    
+    <div>
+        <h2>Body Scanning</h2>
+        <img src="{{ url_for('video_feed') }}" alt="Video Feed" id="video_feed">
+        <button onclick="captureLandmarks()">Capture Landmarks</button>
+    </div>
+
+    <div id="generate-model-section" style="display: none;">
+        <button onclick="window.location.href='/generate_model_page'">Generate Model</button>
+    </div>
+
+    <script>
+        function captureLandmarks() {
+            fetch('/capture', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message || data.error);
+                    document.getElementById('generate-model-section').style.display = 'block';
+                });
+        }
+    </script>
+</body>
+</html>
